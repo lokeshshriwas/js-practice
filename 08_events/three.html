@@ -23,5 +23,15 @@
     document.querySelector('#stop').addEventListener('click', function (){
     clearInterval(intervalId)
     })
+
+      // small example of async code in javascript
+
+        console.log('1') //step 1
+
+        setTimeout(() => {
+            console.log('timeout') // step 3
+        }, 0);
+
+        console.log("2") // step 2
 </script>
 </html>
