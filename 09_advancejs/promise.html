@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promises</title>
+</head>
+<body>
+    
+
+    <script>
+
+// PromiseOne basics about Promise how to execute
+
+        const promiseOne = new Promise(function (resolve, reject){
+            // do an async task 
+            // Db calls, cryptography, network
+
+            setTimeout(() => {
+                console.log("async task is completed")
+                resolve()
+            }, 1000);
+        })
+
+        promiseOne.then(()=> console.log("Promise consumed"))
+
+
+// Promise 2 how to directly run the promise without declaring in any variable
+
+        new Promise(function (resolve, reject){
+            setTimeout(() => {
+                console.log("Promise 2 Executed")
+                resolve()
+            }, 1000);
+        }).then(function (){
+            console.log("PromiseTwo consumed")
+        })
+
+
+// promise 3 passing argument in parameters like what to after resolving 
+
+        const promiseThree = new Promise(function (resolve, reject){
+            setTimeout(() => {
+                resolve({username: "Tom", age: 23, email: "tom@example.com"})
+            }, 1000);
+        })
+
+        promiseThree.then(function(user){
+            console.log(user)
+            // console.log(user.username)  // we can use any destructuring method of object 
+        })
+
+// Promise 4 reject parameter use 
+
+// +++++++++++ this type of promise is executed one after another, line by line +++++++++++++//
+        const promiseFour = new Promise(function (resolve, reject){
+            setTimeout(() => {
+                let error = true;
+                if(!error){
+                    resolve({username: "lokesh", age: 21})
+                } else {
+                    reject("Error: something went wrong")
+                }
+            }, 1000);
+        })
+
+        .then(function (user){  //.then function is used as a representative of resolved parameter of the above function
+            return user.username
+        })
+        .then(function (username){ // this is called chaining in promise "thening"
+            console.log(username)
+        })
+        .catch(function (error){  // catch is used as an representative of reject parameter of the above function
+            console.log(error)
+        })
+        .finally(()=> console.log("this promise is either resolved or rejected i'll run in both the cases i don't care")) // finally is the function that always works either it was reject or resolved this finally function will run in both the case
+
+
+// promise 5 handling promise using async await 
+
+        /*
+        const promiseFive = new Promise(function(resolve, reject){
+            setTimeout(() => {
+                let error = false;
+                if(!error){
+                    resolve({username: "javascript", age: 21})
+                } else {
+                    reject("Error: JS went wrong")
+                }
+            }, 1000);
+        })
+
+        async function promiseFiveConsumed(){
+            const response = await promiseFive
+            console.log(response)
+        }
+        promiseFiveConsumed()
+        */
+
+        //but this code has a problem if we convert error = true it will going to give an error because in async await there is a problem of catch handeling but there is a solution also using try and catch method given below
+
+
+
+        // +++++++ this method help us to manage the rejection case in async and await function ++++++++ // 
+
+        const promiseFive = new Promise(function(resolve, reject){
+            setTimeout(() => {
+                let error = true;
+                if(!error){
+                    resolve({username: "javascript", age: 21})
+                } else {
+                    reject("Error: JS went wrong")
+                }
+            }, 1000);
+        })
+
+        async function promiseFiveConsumed(){
+            try {
+                const response = await promiseFive
+                console.log(response)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        promiseFiveConsumed()
+
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // async function getAllUsers(){
+        //     try {
+        //         const response = await fetch("https://jsonplaceholder.typicode.com/users") 
+        //         // console.log(response)
+        //         const data = await response.json()
+        //         console.log(data)
+        //     } catch (error) {
+        //         console.log("E: error occured")
+        //     }
+        // }
+
+        // getAllUsers()
+
+
+        // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        // fetch("https://jsonplaceholder.typicode.com/users")
+        // .then(function (response){
+        //     return response.json()
+        // })
+        // .then(function (data){
+        //     console.log(data)
+        // })
+        // .catch(function (error){
+        //     console.log(error)
+        // })
+
+    </script> 
+</body>
+</html>
