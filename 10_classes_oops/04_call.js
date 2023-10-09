@@ -6,7 +6,7 @@ function setUserName(username){
 function createUser(username, email, password){
     setUserName.call(this, username) // this is just a reference of the function it is not called yet
     // .call is the function which explicity calls the function in the current context and this, is used so that it can be said or applied for the current context without it the code is incorrect
-
+    // // .call(this,) passes the current execution context to another function
     this.email = email;
     this.password = password;
 }
